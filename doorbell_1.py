@@ -1,11 +1,13 @@
 #!/usr/bin/python
+#Pushover code taken from http://www.expertreviews.co.uk/raspberry-pi-foundation/1404017/best-raspberry-pi-projects/page/0/2
+#intended mp3 location /opt/DoorbellChimes
+#Heavy doorbell chimes at https://github.com/Brockway/DoorbellChimes
 
 import os
 import time
 import RPi.GPIO as GPIO
 import random
 import httplib, urllib
-from mutagen.mp3 import MP3
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
