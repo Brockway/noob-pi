@@ -38,7 +38,7 @@ while True:
 		chime = '/opt/DoorbellChimes/' + filename
 		os.system('date')
 		#print chime
-		os.system('/usr/bin/mpg321 ' + chime)
 		PushOver('Doorbell','Someone is at the door!','')
+		os.system('/usr/bin/mpg321 ' + chime)
 		
 time.sleep(1)
