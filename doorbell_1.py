@@ -1,4 +1,4 @@
-#!/usr/bin/pythom
+#!/usr/bin/python
 
 import os
 import time
