@@ -5,6 +5,7 @@
 
 import os
 import time
+import subprocess
 import RPi.GPIO as GPIO
 import random
 import httplib, urllib
@@ -14,8 +15,8 @@ GPIO.setwarnings(False)
 GPIO.setup(17, GPIO.IN)
 
 def PushOver(title,message,url):
-	app_key = "Your App Key Here"
-	user_key = "Your User Key Here"
+	app_key = "Your key here"
+	user_key = "Your key here"
 	#Connect with the Pushover API server
 	conn = httplib.HTTPSConnection("api.pushover.net:443")
 
@@ -39,6 +40,9 @@ while True:
 		os.system('date')
 		#print chime
 		PushOver('Doorbell','Someone is at the door!','')
-		os.system('/usr/bin/mpg321 ' + chime)
-		
+		#os.system('/usr/bin/mpg321 ' + chime)
+		#os.system('/usr/bin/omxplayer -o alsa ' + chime)
+		status = subprocess.call("/usr/bin/mpg123 " +chime, shell=True)
+		print status
 time.sleep(1)
+
