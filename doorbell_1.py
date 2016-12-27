@@ -9,14 +9,14 @@ import subprocess
 import RPi.GPIO as GPIO
 import random
 import httplib, urllib
+import glob
+import json
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 GPIO.setup(17, GPIO.IN)
 
 def PushOver(title,message,url):
-	app_key = "Your key here"
-	user_key = "Your key here"
 	#Connect with the Pushover API server
 	conn = httplib.HTTPSConnection("api.pushover.net:443")
 
@@ -26,17 +26,20 @@ def PushOver(title,message,url):
 	#Any error messages or other responses?
 	conn.getresponse()
 
+# Parse config.json for configuration options
+with open('config.json') as data_file:
+    config = json.load(data_file)
+mp3location = config['mp3location']
+app_key = config['app_key']
+user_key = config['user_key']
+
 # Alert on start
 PushOver('Doorbell','Started','')
 print "Doorbell Server Started\r"
 
 while True:
 	if ( GPIO.input(17) == False ):
-		while True:
-			filename = random.choice(os.listdir("/opt/DoorbellChimes"))
-	        	if ( filename.endswith(".mp3") ):
-				break
-		chime = '/opt/DoorbellChimes/' + filename
+		chime = random.choice(glob.glob(mp3location+"*.mp3"))
 		os.system('date')
 		#print chime
 		PushOver('Doorbell','Someone is at the door!','')
