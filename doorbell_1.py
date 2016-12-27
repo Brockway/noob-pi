@@ -9,6 +9,7 @@ import subprocess
 import RPi.GPIO as GPIO
 import random
 import httplib, urllib
+import glob
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -33,9 +34,7 @@ print "Doorbell Server Started\r"
 while True:
 	if ( GPIO.input(17) == False ):
 		while True:
-			filename = random.choice(os.listdir("/opt/DoorbellChimes"))
-	        	if ( filename.endswith(".mp3") ):
-				break
+			filename = random.choice(glob.glob("/opt/DoorbellChimes/*.mp3"))
 		chime = '/opt/DoorbellChimes/' + filename
 		os.system('date')
 		#print chime
